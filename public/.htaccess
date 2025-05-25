@@ -1,0 +1,23 @@
+# C:\MAMP\htdocs\eiganights\.htaccess
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Si vous voulez forcer HTTPS (décommentez si vous avez SSL configuré pour localhost)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Règle pour servir les fichiers existants directement depuis le dossier public/ s'ils sont demandés
+    # Exemple: http://localhost/eiganights/assets/css/style.css sera servi depuis public/assets/css/style.css
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(assets/.*)$ public/$1 [L,NC]
+
+
+    # Redirige toutes les autres requêtes vers public/index.php
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ public/index.php [L]
+
+</IfModule>
